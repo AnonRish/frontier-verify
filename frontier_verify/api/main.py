@@ -25,6 +25,7 @@ from frontier_verify.evidence.models import Evidence, HardwareEvidence
 from frontier_verify.keys.local_provider import LocalFileKeyProvider
 from frontier_verify.keys.provider import KeyStatus
 from frontier_verify.policies.evaluator import evaluate
+from frontier_verify.api.recomputation import create_router as create_recomputation_router
 from frontier_verify.policies.models import Policy
 from frontier_verify.receipts.models import Receipt
 from frontier_verify.receipts.signing import (
@@ -52,6 +53,9 @@ key_provider = LocalFileKeyProvider(_default_key_dir())
 # Phase 4: real audit logging for administrative actions -- see
 # frontier_verify/audit/log.py for why this exists.
 audit_log = AuditLog()
+
+# Experimental Track 2 software path. The legacy /v1/recomputation endpoints remain 501.
+app.include_router(create_recomputation_router(store=store, key_provider=key_provider))
 
 
 def get_demo_verifier_public_key():
