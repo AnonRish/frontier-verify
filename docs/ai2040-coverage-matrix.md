@@ -39,7 +39,7 @@ passing tests isn't sufficient grounds to claim one.
 
 ## Reading this table honestly
 
-Five rows say `EXPERIMENTAL`. All five are real, tested code -- not
+Six rows say `EXPERIMENTAL`. All six are real, tested code -- not
 placeholders -- but every one of them is narrower than its name suggests
 once you read the notes column. None of the AI-2040 workstreams whose
 entire point is *catching a dishonest, resourced adversary* (compute
