@@ -9,6 +9,7 @@ from frontier_verify.core.canonical import digest as canonical_digest
 from frontier_verify.recomputation.chunk import WorkloadChunk
 from frontier_verify.recomputation.pure_python_kernel import DeterministicKernel
 from frontier_verify.recomputation.sampler import Challenge, commit_challenge, select_sample
+from frontier_verify.recomputation.metrics import measure, sampled_work
 from frontier_verify.receipts.models import Receipt
 from frontier_verify.receipts.signing import sign_receipt
 
@@ -122,19 +123,23 @@ def create_router(store, key_provider):
         )
         by_id = {c.chunk_id: c for c in chunks}
         mismatches = []
+        total_elapsed_ns = 0
         for chunk_id in selected:
             chunk = by_id[chunk_id]
             try:
                 input_data = store.get_recomputation_input(chunk.input_digest)
             except (KeyError, ValueError) as exc:
                 raise HTTPException(409, f"recomputation input unavailable for {chunk_id}") from exc
-            recomputed = kernel.recompute_digest(input_data)
+            measurement = measure(lambda: kernel.recompute_digest(input_data))
+            total_elapsed_ns += measurement.elapsed_ns
+            recomputed = measurement.value
             if recomputed != chunk.claimed_output_digest:
                 mismatches.append({
                     "chunk_id": chunk_id,
                     "matched": False,
                     "claimed_output_digest": chunk.claimed_output_digest,
                     "recomputed_output_digest": recomputed,
+                    "elapsed_ns": measurement.elapsed_ns,
                 })
 
         passed = bool(selected) and not mismatches
@@ -170,6 +175,8 @@ def create_router(store, key_provider):
             "total_chunks": len(chunks),
             "sampled_chunks": len(selected),
             "selected_chunk_ids": selected,
+            "work_accounting": sampled_work(len(chunks), len(selected)),
+            "verifier_elapsed_ns": total_elapsed_ns,
             "mismatches": mismatches,
             "status": status,
             "passed": passed,
