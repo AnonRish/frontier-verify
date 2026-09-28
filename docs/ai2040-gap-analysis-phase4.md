@@ -60,11 +60,11 @@ spirit, and the new finding makes that concrete without revealing
 anything the matrix's existing RED/YELLOW scores weren't already
 conservative about.
 
-**GREEN: 0. YELLOW: 6. RED: 19. Identical to Phase 4.**
+**Phase 6 software update: one row moved from RED to YELLOW after the experimental /v2 recomputation integration was added.**\n\n**GREEN: 0. YELLOW: 7. RED: 18.**
 
 ## Totals
 
-**GREEN: 0. YELLOW: 6. RED: 19.**
+**GREEN: 0. YELLOW: 7. RED: 18.**
 
 Zero GREEN entries is the correct, honest result -- not a scoring failure
 to fix. Nothing in this project has been hardware-validated or
