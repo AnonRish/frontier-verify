@@ -52,8 +52,7 @@ fv doctor
 fv attest --out attestation.json
 fv evidence build --model-digest sha256:... --attestation-file attestation.json --out evidence.json
 uvicorn frontier_verify.api.main:app --reload &
-# ... POST evidence.json + a policy to /v1/evidence and /v1/policies/validate
-# (with header X-Api-Key: dev-key), POST to /v1/inferences/verify, then:
+# ... POST evidence.json + a policy to /v1/evidence and /v1/policies/validate\n# (with header X-Api-Key: dev-key), POST to /v1/inferences/verify, then:\n# Experimental Track 2: /v1/recomputation/v2/challenges -> submissions -> check
 fv receipt verify receipt.json --public-key-hex <from GET /v1/verifier/public-key>
 ```
 
