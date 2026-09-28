@@ -50,6 +50,7 @@ class Store:
         base = data_dir or _default_data_dir()
         self.evidence_cas = ContentAddressedStore(base / "evidence")
         self.attestation_cas = ContentAddressedStore(base / "attestations")
+        self.recomputation_input_cas = ContentAddressedStore(base / "recomputation-inputs")
         self.evidence_index: dict[str, str] = {}
         self.attestation_index: dict[str, str] = {}
         self.policies: dict[str, Policy] = {}
@@ -93,6 +94,14 @@ class Store:
         digest = self.attestation_cas.put(obj)
         self.attestation_index[attestation_id] = digest
         return digest
+
+    def put_recomputation_input(self, obj: dict) -> str:
+        """Persist recomputation input by content hash so later recomputation
+        uses the exact bytes/content that was submitted before seed reveal."""
+        return self.recomputation_input_cas.put(obj)
+
+    def get_recomputation_input(self, digest: str) -> dict:
+        return self.recomputation_input_cas.get(digest)
 
     def get_attestation(self, attestation_id: str) -> HardwareEvidence | None:
         digest = self.attestation_index.get(attestation_id)
