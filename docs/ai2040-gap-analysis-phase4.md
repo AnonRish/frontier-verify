@@ -29,7 +29,7 @@ judged per row below, since "RESEARCH" alone doesn't distinguish these.
 | 8 | Network evidence | RED | Deliberately not built -- see `docs/network-evidence-protocol.md` |
 | 9 | Passive observation | RED | Same |
 | 10 | Network capture constraints | RED | Same |
-| 11 | Independent recomputation | RED | Sampling logic exists (#12) but is not wired to any live endpoint; zero actual recomputation of anything happens in the running system |
+| 11 | Independent recomputation | YELLOW | An experimental /v2 endpoint now executes a bounded deterministic recomputation kernel over sampled, content-addressed inputs and emits a signed receipt; it is not frontier-scale and the legacy full Phase 6 interface remains unfinished |
 | 12 | Random partial recomputation | YELLOW | Commit-reveal unpredictability is real and adversarially tested; a genuine (if tiny) numerical kernel now exists (`frontier_verify/recomputation/numpy_kernel.py`), replacing the pure hash-based Phase 2/3 toy |
 | 13 | Frontier-model recomputation | RED | A fixed, untrained, ~1000-parameter CPU MLP is not meaningfully closer to frontier-scale recomputation than the toy hash it replaced -- real progress on the STAGED ROADMAP's Stage 1, essentially zero progress on the actual workstream |
 | 14 | Verifier independence | YELLOW | Cross-language receipt verification is real and tested; quorum experiment demonstrates real operator-level independence AND its own honest limit (zero design-level independence, all instances share source) -- see `docs/research/verifier-trust.md` |
