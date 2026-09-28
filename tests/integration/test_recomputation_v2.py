@@ -54,6 +54,8 @@ def test_track2_recomputation_v2_full_loop():
     assert body["status"] == "PASS"
     assert body["sampled_chunks"] == 2
     assert body["mismatches"] == []
+    assert body["work_accounting"]["coverage_fraction"] == 1.0
+    assert body["verifier_elapsed_ns"] >= 0
     assert body["receipt"]["result"] is True
 
 
