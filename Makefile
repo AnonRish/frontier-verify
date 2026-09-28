@@ -1,7 +1,7 @@
 .PHONY: install test lint demo schemas serve
 
 install:
-	python3 -m pip install -e ".[dev]" --break-system-packages
+	python3 -m pip install -e ".[dev,triton,recomputation-research]" --break-system-packages
 
 test:
 	python3 -m pytest -v

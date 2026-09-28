@@ -29,9 +29,9 @@ a workstream-by-workstream honest status against the full AI-2040 agenda
 
 ```bash
 git clone <this-repo> && cd frontier-verify
-python3 -m pip install -e ".[dev]"
+python3 -m pip install -e ".[dev,triton,recomputation-research]"
 
-# run the full test suite (123 tests + 4 hardware tests that skip
+# run the full test suite (131 tests + 4 hardware tests that skip
 # cleanly without a GPU: unit, security, adversarial, integration,
 # conformance)
 pytest
