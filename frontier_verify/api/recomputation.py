@@ -1,8 +1,6 @@
 from __future__ import annotations
 
 import uuid
-from dataclasses import asdict
-
 from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel, Field
 
